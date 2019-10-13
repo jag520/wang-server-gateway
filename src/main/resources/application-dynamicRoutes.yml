@@ -1,0 +1,35 @@
+# 以下为测试数据格式
+dynamicRoutes:
+  routes:
+    # 业主APP 服务端API 接口 路由及限流
+    - id: community_route
+      uri: lb://UAMA-API-LC-COMMUNITY
+      predicates:
+        - Path=/**
+      filters:
+        - name: RequestRateLimiter
+          args:
+            # 允许用户每秒处理多少个请求
+            #允许用户每秒执行多少请求，而不会丢弃任何请求。这是令牌桶填充的速率。
+            redis-rate-limiter.replenishRate: 300
+            # 令牌桶的容量，允许在一秒钟内完成的最大请求数
+            #一秒钟内允许执行的最大请求数。这是令牌桶可以容纳的令牌数。将此值设置为零将阻止所有请求。
+            redis-rate-limiter.burstCapacity: 300
+            #超过限制返回状态429，请求太多。 HTTP/1.1 429 Too Many Requests
+            key-resolver: "#{@communityKeyResolver}"
+
+# communityKeyResolver 业主APP服务端API 多个Path共享限流数量 路径组
+apiCommunityShareLimitList:
+  # 首页地址
+  - /home/getAppHome/**
+  - /home/getUserInfoAndAsset/**
+  - /home/getPushUrl/**
+  - /login/updateUserLogOnData/**
+  - /login/getAppVersion/**
+  - /login/getAppPatch/**
+  - /ad/getCommunityAd/**
+  # 通知地址
+  - /notice/getUserNoticeNum/**
+  - /notice/read/record/**
+  - /notice/getNoticeTypeList/**
+

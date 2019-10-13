@@ -1,0 +1,9 @@
+# 动态加载文件中路由信息
+# 服务器部署时候，请加参数覆盖本地读取  --dynamic.routes.ymlfilePath=/home/wang/yzn/application-dynamicRoutes.yml
+dynamic:
+  routes:
+    #ymlfilePath: /application-dynamicRoutes.yml   # 相对路径（resources下文件）  读取的路由文件路径。 服务器环境请写替换为绝对路径
+    ymlfilePath: /data/v40/mnt/all-in-one-platform/application-dynamicRoutes.yml   # 绝对路径  读取的路由文件路径。 服务器环境请写替换为绝对路径
+
+
+

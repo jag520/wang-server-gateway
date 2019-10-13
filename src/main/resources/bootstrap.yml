@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: wang-server-gateway
+  profiles:
+    active: native
+  redis:
+    host: sc-cache-vpc.redis.rds.aliyuncs.com
+    port: 6379
+    password: Remain1229
+    database: 14
+    jedis:
+      pool:
+        max-idle: 200
+        min-idle: 50
+        max-active: 200
+        max-wait: -1
+    timeout: 15000
+
+# 端口
+server:
+  port: 7000
+
+# 注册中心
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1.wang:7000/eureka/
+
+# 调试日志
+#logging:
+#  level:
+#    org.springframework.boot.autoconfigure: DEBUG
+#    org.springframework.cloud.gateway: trace
+#    org.springframework.http.server.reactive: DEBUG
+#    org.springframework.web.reactive: DEBUG
+#    reactor.ipc.netty: DEBUG
+
+feign:
+  hystrix:
+    enabled: true
+
+# constant
+wang.client.security.username: wang_gateway
+wang.client.security.password: wY9o70NXwRwqlOGmdroH
+
+# admin server config
+spring.boot.admin.client.url: http://localhost:7330
+# admin server authorize
+spring.boot.admin.client.username: wang_admin
+spring.boot.admin.client.password: RCJloGWFYqKNowsHkXMD
+# client authorize
+spring.boot.admin.client.instance.metadata.user.name: ${wang.client.security.username}
+spring.boot.admin.client.instance.metadata.user.password: ${wang.client.security.password}
+
+
+# actuator config
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /monitor
+# security config
+spring.security.user.name: ${wang.client.security.username}
+spring.security.user.password: ${wang.client.security.password}
+spring.security.user.roles: ADMIN
