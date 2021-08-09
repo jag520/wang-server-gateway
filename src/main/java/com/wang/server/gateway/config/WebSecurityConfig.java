@@ -17,7 +17,8 @@ public class WebSecurityConfig {
     @Bean
     SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange().pathMatchers(basePath + "/**").hasRole(roleName).anyExchange().permitAll().and().csrf()
-                .and().httpBasic().and().csrf().disable();
+                .and().httpBasic().and().csrf().disable()
+        .logout().logoutUrl("/9QZ2sg37yjKxm5RE0tIJ"); // 解决问题：请求/logout和框架冲突导致框架302
         return http.build();
     }
 
